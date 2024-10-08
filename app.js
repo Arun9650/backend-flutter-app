@@ -138,7 +138,7 @@ app.post('/enquiry/:empid', (req, res) => {
   console.log("🚀 ~ app.post ~ DOB:", DOB)
 
   // Validate input
-  if (!empid || !empname || !custname || !custphoneno || !custemailid || !custaddress || !latitude || !longitude || !DOB || DOB !== "") {
+  if (!empid || !empname || !custname || !custphoneno || !custemailid || !custaddress || !latitude || !longitude || !DOB) {
     
     return res.status(400).json({ error: 'All fields are required, including empid, empname, and DOB' });
   }
