@@ -98,16 +98,16 @@ app.get('/enquiries/:empid', (req, res) => {
 app.put('/enquiries/:id', (req, res) => {
   const enquiryid = req.params.id;
   console.log("🚀 ~ app.put ~ enquiryId:", enquiryid);
-  const { empname, custname, custphoneno, custemailid, custaddress, latitude, longitude, DOB } = req.body;
+  const { empname, custname, custphoneno, custemailid, custaddress, latitude, longitude, DOB, category } = req.body;
 
   // Validate input
-  if (!empname || !custname || !custphoneno || !custemailid || !custaddress || !latitude || !longitude || !DOB) {
+  if (!empname || !custname || !custphoneno || !custemailid || !custaddress || !latitude || !longitude || !DOB, !category) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
   const updateQuery = `
     UPDATE EnquiryDetails 
-    SET empname = ?, custname = ?, custphoneno = ?, custemailid = ?, custaddress = ?, longitude = ?, latitude = ?, DOB = ?
+    SET empname = ?, custname = ?, custphoneno = ?, custemailid = ?, custaddress = ?, longitude = ?, latitude = ?, DOB = ?, category = ?
     WHERE enquiryid = ?
   `;
 
@@ -134,28 +134,19 @@ app.put('/enquiries/:id', (req, res) => {
 // POST API endpoint to add a new enquiry with empid as a URL parameter
 app.post('/enquiry/:empid', (req, res) => {
   const { empid } = req.params;
-  const { empname, custname, custphoneno, custemailid, custaddress, latitude, longitude, entrytime, DOB } = req.body;
+  const { empname, custname, custphoneno, custemailid, custaddress, latitude, longitude, entrytime, DOB, category } = req.body;
   console.log("🚀 ~ app.post ~ DOB:", DOB)
 
   // Validate input
-  if (!empid || !empname || !custname || !custphoneno || !custemailid || !custaddress || !latitude || !longitude || !DOB) {
+  if (!empid || !empname || !custname || !custphoneno || !custemailid || !custaddress || !latitude || !longitude || !DOB, !category) {
     
     return res.status(400).json({ error: 'All fields are required, including empid, empname, and DOB' });
   }
 
-  console.log("🚀 ~ app.post ~ DOB:", DOB)
-    console.log("🚀 ~ app.post ~ latitude:", latitude)
-    console.log("🚀 ~ app.post ~ custaddress:", custaddress)
-    console.log("🚀 ~ app.post ~ custemailid:", custemailid)
-    console.log("🚀 ~ app.post ~ custphoneno:", custphoneno)
-    console.log("🚀 ~ app.post ~ custname:", custname)
-    console.log("🚀 ~ app.post ~ empname:", empname)
-    console.log("🚀 ~ app.post ~ empid:", empid)
-
   // Insert query to add a new enquiry with empid, empname, and dob
   const insertQuery = `
-    INSERT INTO EnquiryDetails (empid, empname, custname, custphoneno, custemailid, custaddress, latitude, longitude,entrytime,  DOB)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO EnquiryDetails (empid, empname, custname, custphoneno, custemailid, custaddress, latitude, longitude,entrytime,  DOB, category)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   pool.query(insertQuery, [empid, empname, custname, custphoneno, custemailid, custaddress, latitude, longitude, entrytime, DOB], (error, results) => {
