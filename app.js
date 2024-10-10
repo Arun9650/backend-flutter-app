@@ -112,7 +112,7 @@ app.put('/enquiries/:id', (req, res) => {
   `;
 
   // Switch the position of enquiryid and DOB in the query parameters
-  pool.query(updateQuery, [empname, custname, custphoneno, custemailid, custaddress, longitude, latitude, DOB, enquiryid], (error, results) => {
+  pool.query(updateQuery, [empname, custname, custphoneno, custemailid, custaddress, longitude, latitude, DOB, enquiryid, category], (error, results) => {
     if (error) {
       console.error('Database update error:', error); // Log the error details
       return res.status(500).json({ error: 'Failed to update enquiry details' });
