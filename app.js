@@ -98,7 +98,7 @@ app.get('/enquiries/:empid', (req, res) => {
 app.put('/enquiries/:id', (req, res) => {
   const enquiryid = req.params.id;
   console.log("🚀 ~ app.put ~ enquiryId:", enquiryid);
-  const { empname, custname, custphoneno, custemailid, custaddress, latitude, longitude, DOB, category } = req.body;
+  const { empname,category, custname, custphoneno, custemailid, custaddress, latitude, longitude, DOB  } = req.body;
 
   // Validate input
   if (!empname || !custname || !custphoneno || !custemailid || !custaddress || !latitude || !longitude || !DOB, !category) {
@@ -107,12 +107,12 @@ app.put('/enquiries/:id', (req, res) => {
 
   const updateQuery = `
     UPDATE EnquiryDetails 
-    SET empname = ?, custname = ?, custphoneno = ?, custemailid = ?, custaddress = ?, longitude = ?, latitude = ?, DOB = ?, category = ?
+    SET empname = ?, custname = ?,  category = ?, custphoneno = ?, custemailid = ?, custaddress = ?, longitude = ?, latitude = ?, DOB = ?
     WHERE enquiryid = ?
   `;
 
   // Switch the position of enquiryid and DOB in the query parameters
-  pool.query(updateQuery, [empname, custname, custphoneno, custemailid, custaddress, longitude, latitude, DOB, enquiryid, category], (error, results) => {
+  pool.query(updateQuery, [empname, custname, category, custphoneno, custemailid, custaddress, longitude, latitude, DOB, enquiryid ], (error, results) => {
     if (error) {
       console.error('Database update error:', error); // Log the error details
       return res.status(500).json({ error: 'Failed to update enquiry details' });
