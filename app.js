@@ -149,7 +149,7 @@ app.post('/enquiry/:empid', (req, res) => {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  pool.query(insertQuery, [empid, empname, custname, custphoneno, custemailid, custaddress, latitude, longitude, entrytime, DOB], (error, results) => {
+  pool.query(insertQuery, [empid, empname, custname, custphoneno, custemailid, custaddress, latitude, longitude, entrytime, DOB, category], (error, results) => {
     if (error) {
       console.error('Database insertion error:', error); // Log the error details
       return res.status(500).json({ error: 'Failed to add new enquiry' });
